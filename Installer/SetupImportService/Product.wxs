@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <?include $(sys.CURRENTDIR)\ProductInfo.wxi?>
+  <?include $(sys.CURRENTDIR)\Pathes.wxi?>
+
+  <Product Id="*" Name="$(var.ProductName) V$(var.MajorVersion).$(var.MinorVersion).$(var.PatchVersion)" Language="1033"
+           Version="$(var.Version)" Manufacturer="$(var.Manufacturer)" UpgradeCode="fd23d504-4bda-46d7-ae7a-b0c684f70484">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+    <Media Id="1" Cabinet="ImportService.cab" EmbedCab="yes" />
+
+    <Icon Id='ProductIcon' SourceFile='$(var.SolutionItems.Path)\ImmerArchiv.ico' />
+    <Property Id='ARPPRODUCTICON' Value='ProductIcon' />
+  
+      
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="DesktopFolder" Name="Desktop" />
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLLOCATION" Name="ImmerArchiv.ImportService">
+
+          <Component Id="ServiceConfigurationDialog" Guid="7017D312-A5B3-4265-B970-D6238982E287">
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Application.Impl.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Application.Impl.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Application.Shared.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Application.Shared.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Domain.Impl.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Domain.Impl.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Domain.Shared.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Domain.Shared.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Infrastructure.Impl.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Infrastructure.Impl.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Infrastructure.Shared.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Infrastructure.Shared.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Locator.Internal.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Locator.Internal.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Interfaces.SharedDialogs.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Interfaces.SharedDialogs.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Castle.Core.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Castle.Windsor.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\MaterialDesignColors.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\MaterialDesignThemes.Wpf.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Newtonsoft.Json.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\log4net.dll" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Interfaces.ServiceConfigurationDialog.exe"  KeyPath="yes">
+              <Shortcut Id="DesktopShortcutServiceConfigurationDialog"
+                  Directory="DesktopFolder"
+                  Name="ImmerArchiv.Config"
+                  Description="ConfigDialog for Importservice of ImmerArchiv Softwaresuite"
+                  WorkingDirectory="INSTALLLOCATION"
+                  Icon="Archiv10.Interfaces.ServiceConfigurationDialog.exe"
+                  IconIndex="0"
+                  Advertise="yes" >
+                <Icon Id="Archiv10.Interfaces.ServiceConfigurationDialog.exe" SourceFile="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Interfaces.ServiceConfigurationDialog.exe" />
+              </Shortcut>
+            </File>
+
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Interfaces.ServiceConfigurationDialog.pdb" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\Archiv10.Interfaces.ServiceConfigurationDialog.exe.config" />
+            <File Source="$(var.ServiceConfigurationDialog.BinPath)\ProductInfo.xml" />
+          </Component>
+          
+          <Component Id="ImportService" Guid="067F9D47-5376-4A20-BAF1-DBB5F36404B9">
+            <File Source="$(var.ImportService.BinPath)\Archiv10.Interfaces.ImportService.exe" />
+            <File Source="$(var.ImportService.BinPath)\Archiv10.Interfaces.ImportService.pdb" />
+            <File Source="$(var.ImportService.BinPath)\Archiv10.Interfaces.ImportService.exe.config" />
+
+            <ServiceInstall
+             Id="ServiceInstaller"
+             Type="ownProcess"
+             Vital="yes"
+             Name="ImmerArchiv.ImportService"
+             DisplayName="ImmerArchiv.ImportService"
+             Description="Synchronisiert Verzeichnisse ins Archiv"
+             Start="auto"
+             Account="LocalSystem"
+             ErrorControl="ignore"
+             Interactive="no"
+              >
+            </ServiceInstall>
+            <ServiceControl Id="StartService" Start="install" Stop="both" Remove="uninstall" Name="ImmerArchiv.ImportService" Wait="yes" />
+            
+            
+          </Component>
+
+        </Directory>
+      </Directory>
+    </Directory>
+
+    <Feature Id="ProductFeature" Title="SetupImportService" Level="1">
+      <ComponentRef Id="ServiceConfigurationDialog" />
+      <ComponentRef Id="ImportService" />
+    </Feature>
+
+    <Property Id="WIXUI_INSTALLDIR" Value="INSTALLLOCATION" ></Property>
+    <UIRef Id="WixUI_InstallDir"/>
+
+    <WixVariable Id="WixUILicenseRtf" Value="licence.rtf" />
+    <WixVariable Id="WixUIDialogBmp" Value="InstallerBackground.bmp"/>
+
+    <Upgrade Id="fd23d504-4bda-46d7-ae7a-b0c684f70484">
+      <UpgradeVersion Minimum="$(var.Version)" IncludeMinimum="no" OnlyDetect="yes" Property="NEWERVERSIONDETECTED" />
+      <UpgradeVersion Minimum="0.0.0" Maximum="$(var.Version)" IncludeMinimum="yes" IncludeMaximum="yes" Property="OLDERVERSIONBEINGUPGRADED" />
+    </Upgrade>
+
+    <InstallExecuteSequence>
+      <RemoveExistingProducts After="InstallInitialize" />
+      <Custom Action="NewerVersion" After="FindRelatedProducts">NEWERVERSIONDETECTED</Custom>
+    </InstallExecuteSequence>
+
+    <CustomAction Id="NewerVersion" Error="A later version of [ProductName] is already installed." />
+
+
+
+  
+  </Product>
+ </Wix>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+    <?define ImportDialog.BinPath = "../../Interfaces/ImportDialog/bin/$(var.Configuration)" ?>
+    <?define SolutionItems.Path = "../../SolutionItems" ?>
+</Include>
+
+

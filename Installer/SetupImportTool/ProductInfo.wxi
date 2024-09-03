@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+  <!--
+  Versioning. These have to be changed for upgrades.
+  It's not enough to just include newer files.
+  -->
+
+  <?define MajorVersion="1" ?>
+  <?define MinorVersion="1" ?>
+  <?define PatchVersion="0" ?>
+  
+  <?define Manufacturer="Dirk Friedenberger" ?>
+  <?define ProductName="ImmerArchiv.ImportTool" ?>
+
+  <!-- Full version number to display -->
+  <?define Version="$(var.MajorVersion).$(var.MinorVersion).$(var.PatchVersion).0" ?>
+
+</Include>
+
+

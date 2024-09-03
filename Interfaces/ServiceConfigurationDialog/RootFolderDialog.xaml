@@ -1,0 +1,69 @@
+﻿<Window x:Class="Archiv10.Interfaces.ServiceConfigurationDialog.RootFolderDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Archiv10.Interfaces.ServiceConfigurationDialog"
+        mc:Ignorable="d"
+        Title="RootFolderDialog"  SizeToContent="WidthAndHeight"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
+        >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3">Verzeichnis</Label>
+        <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="4" x:Name="txtFolder" TextChanged="tbFolder_Changed" MinWidth="400" Text=""/>
+
+        <Button Grid.Row="1" Grid.Column="3" Name="btnOpen" Click="btnOpen_Click">
+            <Viewbox Width="24" Height="24">
+                <Canvas Width="24" Height="24">
+                    <Path Data="M10,4H4C2.89,4 2,4.89 2,6V18A2,2 0 0,0 4,20H20A2,2 0 0,0 22,18V8C22,6.89 21.1,6 20,6H12L10,4Z" 
+                          Fill="{Binding Foreground, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Button}}" />
+                </Canvas>
+            </Viewbox>
+            <Button.ToolTip>
+                <ToolTip>
+                    <StackPanel>
+                        <TextBlock>Verzeichnis öffnen</TextBlock>
+                    </StackPanel>
+                </ToolTip>
+            </Button.ToolTip>
+        </Button>
+
+        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3">Filter</Label>
+        <RadioButton Grid.Row="3" Grid.ColumnSpan="2" GroupName="Filter" Name="rbFilterAll" Content="Alle Dateien archivieren" IsChecked="True"/>
+        <RadioButton Grid.Row="4" Grid.ColumnSpan="2" GroupName="Filter" Name="rbFilterImages" Content="Bilder (*.jpg, *.jpeg, *.gif, *.png)" />
+        <RadioButton Grid.Row="5" Grid.ColumnSpan="2" GroupName="Filter" Name="rbFilterPdfs" Content="Pdf's (*.pdf)" />
+        <RadioButton Grid.Row="6" GroupName="Filter" Name="rbFilterIndividual" />
+        <TextBox Grid.Row="6" Grid.Column="1" x:Name="txtFilter" Text="*.txt, *.doc, *.avi" Margin="5,0,0,0"/>
+        
+        <Label Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="3">Name von Bagit</Label>
+        <RadioButton Grid.Row="8" Grid.ColumnSpan="2" GroupName="Naming" Name="rbRelativeName" Content="Relativen Pfad verwenden ()" IsChecked="True"/>
+        <RadioButton Grid.Row="9" Grid.ColumnSpan="2" GroupName="Naming" Name="rbFolderName" Content="Verzeichnisname verwenden ()" />
+
+        <Button Grid.Row="10" Grid.Column="2" IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="60">_Ok</Button>
+        <Button Grid.Row="10" Grid.Column="3" IsCancel="True" MinWidth="60">_Cancel</Button>
+
+    </Grid>
+</Window>

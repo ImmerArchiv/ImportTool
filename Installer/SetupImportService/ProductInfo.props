@@ -1,0 +1,16 @@
+<!--
+*****************************
+    Versioning. See Document SolutionVersionierung.docx
+****************************
+-->
+<Project
+  ToolsVersion="4.0"
+  xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <MajorVersion>1</MajorVersion>
+    <MinorVersion>1</MinorVersion>
+	<PatchVersion>0</PatchVersion>
+    <ProductName>Archiv10.ImportService</ProductName>
+  </PropertyGroup>
+</Project>
+
